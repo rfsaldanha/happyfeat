@@ -1,9 +1,13 @@
 Package: happyfeat
-Title: What the Package Does (One Line, Title Case)
+Title: Feature Extraction From Epidemiological And Related Time-Series 
 Version: 0.0.0.9000
-Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
+Authors@R: c(
+    person("Raphael", "Saldanha", email = "raphael.de-freitas-saldanha@inria.fr", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0003-0652-8466")),
+    person("Reza", "Akbarinia", email = "reza.akbarinia@inria.fr", role = "aut"),
+    person("Patrick", "Valduriez", email = "patrick.valduriez@inria.fr", role = "aut"),
+    person("Marcel", "Pedroso", email = "marcel.pedroso@icict.fiocruz.br", role = "aut"),
+    person("Fabio", "Porto", email = "fporto@lncc.br", role = "aut"))
 Description: What the package does (one paragraph).
 License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
     license
