@@ -24,15 +24,15 @@ tidy_rle_filter <- function(.data, y, a_op, a, b_op, b){
   )
 
   if(a_op == "gte"){
-    res3 <- dplyr::filter(.data = res2, values == TRUE & lengths >= a)
+    res3 <- dplyr::filter(.data = res2, .data$values == TRUE & .data$lengths >= a)
   } else if(a_op == "lte"){
-    res3 <- dplyr::filter(.data = res2, values == TRUE & lengths <= a)
+    res3 <- dplyr::filter(.data = res2, .data$values == TRUE & .data$lengths <= a)
   } else if(a_op == "gt"){
-    res3 <- dplyr::filter(.data = res2, values == TRUE & lengths > a)
+    res3 <- dplyr::filter(.data = res2, .data$values == TRUE & .data$lengths > a)
   } else if(a_op == "lt"){
-    res3 <- dplyr::filter(.data = res2, values == TRUE & lengths < a)
+    res3 <- dplyr::filter(.data = res2, .data$values == TRUE & .data$lengths < a)
   } else if(a_op == "e"){
-    res3 <- dplyr::filter(.data = res2, values == TRUE & lengths == a)
+    res3 <- dplyr::filter(.data = res2, .data$values == TRUE & .data$lengths == a)
   }
 
   nrow(res3)
