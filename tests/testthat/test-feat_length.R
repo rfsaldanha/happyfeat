@@ -1,7 +1,9 @@
 example_1 <- tsibble::tsibble(
   cod = rep(1, 10),
   time = 1:10,
-  value = c(8,15,20,0,0,0,0,5,9,12),key = cod, index = time
+  value = c(8,15,20,0,0,0,0,5,9,12),
+  key = cod,
+  index = time
 )
 
 example_2 <- tsibble::tsibble(
@@ -29,6 +31,12 @@ example_5 <- tsibble::tsibble(
   value = c(2,0,0,0,3,5,0,0,0,0,2),key = cod, index = time
 )
 
+example_6 <- tsibble::tsibble(
+  cod = rep(1, 10),
+  time = 1:10,
+  value = c(8,15,20,0,0,0,0,5,NA,12),key = cod, index = time
+)
+
 test_that("feat_length works with at least 3 consecutive periods with value equal or greater to 5", {
   res <- feat_length(.data = example_1, y = "value", a_op = "gte", a = 3, b_op = "gte", b = 5)
 
@@ -51,16 +59,27 @@ test_that("feat_length works with at least 3 consecutive periods with value equa
   expect_equal(res$freq[[2]], 2)
 })
 
-# test_that("feat_length works with isolate periods with value equal or greater to 5", {
-#   res1 <- feat_length(.data = example_4, y = "value", a_op = "e", a = 1, b_op = "gte", b = 5)
-#
-#   expect_equal(nrow(res1), 1)
-#   expect_equal(res1$freq, 2)
-# })
+test_that("feat_length works with isolate periods with value equal or greater to 5", {
+  res1 <- feat_length(.data = example_4, y = "value", a_op = "e", a = 1, b_op = "gte", b = 5, isolated = TRUE)
+
+  expect_equal(nrow(res1), 1)
+  expect_equal(res1$freq, 2)
+})
+
+test_that("feat_length does not works with isolate and a different of 1", {
+  expect_error(feat_length(.data = example_4, y = "value", a_op = "e", a = 2, b_op = "gte", b = 5, isolated = TRUE))
+})
 
 test_that("feat_length works with at least three consecutive periods with no counts", {
   res <- feat_length(.data = example_5, y = "value", a_op = "gte", a = 3, b_op = "e", b = 0)
 
   expect_equal(nrow(res), 1)
   expect_equal(res$freq, 2)
+})
+
+test_that("feat_length works with NA", {
+  res <- feat_length(.data = example_6, y = "value", a_op = "gte", a = 3, b_op = "gte", b = 5)
+
+  expect_equal(nrow(res), 1)
+  expect_equal(res$freq, 1)
 })
