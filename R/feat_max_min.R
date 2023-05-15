@@ -1,15 +1,17 @@
-feat_max <- function(x, y){
-  checkmate::assert_class(x = x, classes = "tbl_ts")
-  checkmate::assert_choice(x = y, choices = names(x))
+feat_max <- function(.data, y){
+  checkmate::assert_class(x = .data, classes = "tbl_ts")
+  checkmate::assert_choice(x = y, choices = names(.data))
 
-  tsibble::group_by_key(.data = x) %>%
-    dplyr::filter(get(y) == max(get(y)))
+  tsibble::group_by_key(.data = .data) %>%
+    dplyr::filter(get(y) == max(get(y))) %>%
+    dplyr::ungroup()
 }
 
-feat_min <- function(x, y){
-  checkmate::assert_class(x = x, classes = "tbl_ts")
-  checkmate::assert_choice(x = y, choices = names(x))
+feat_min <- function(.data, y){
+  checkmate::assert_class(x = .data, classes = "tbl_ts")
+  checkmate::assert_choice(x = y, choices = names(.data))
 
-  tsibble::group_by_key(.data = x) %>%
-    dplyr::filter(get(y) == min(get(y)))
+  tsibble::group_by_key(.data = .data) %>%
+    dplyr::filter(get(y) == min(get(y))) %>%
+    dplyr::ungroup()
 }
