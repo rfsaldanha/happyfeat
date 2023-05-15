@@ -17,6 +17,7 @@ Imports:
     checkmate,
     dplyr,
     magrittr,
+    tibble,
     tsibble
 Suggests: 
     testthat (>= 3.0.0)
