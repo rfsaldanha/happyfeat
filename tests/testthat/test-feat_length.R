@@ -17,11 +17,11 @@ example_3 <- tsibble::tsibble(
   key = cod, index = time
 )
 
-# example_4 <- tsibble::tsibble(
-#   cod = rep(1, 11),
-#   time = 1:11,
-#   value = c(0,16,0,0,8,3,0,10,0,2,0),key = cod, index = time
-# )
+example_4 <- tsibble::tsibble(
+  cod = rep(1, 11),
+  time = 1:11,
+  value = c(0,16,0,0,8,3,0,10,0,2,0),key = cod, index = time
+)
 
 example_5 <- tsibble::tsibble(
   cod = rep(1, 11),
@@ -52,7 +52,7 @@ test_that("feat_length works with at least 3 consecutive periods with value equa
 })
 
 # test_that("feat_length works with isolate periods with value equal or greater to 5", {
-#   res1 <- feat_length(.data = example_4, y = "value", a_op = "e", a = 0, b_op = "gte", b = 5)
+#   res1 <- feat_length(.data = example_4, y = "value", a_op = "e", a = 1, b_op = "gte", b = 5)
 #
 #   expect_equal(nrow(res1), 1)
 #   expect_equal(res1$freq, 2)
