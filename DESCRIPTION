@@ -17,10 +17,11 @@ Imports:
     checkmate,
     dplyr,
     magrittr,
-    outbreaks,
-    rlang,
     tibble,
     tsibble
 Suggests: 
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    rlang,
+    outbreaks
+Config/testthat/parallel: false
 Config/testthat/edition: 3
