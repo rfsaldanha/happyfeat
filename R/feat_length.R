@@ -1,9 +1,13 @@
 rle_filter <- function(.data, y, a_op, a, b_op, b, isolated){
+  # Check assertions
   checkmate::assert_class(x = .data, classes = "tbl")
   checkmate::assert_choice(x = y, choices = names(.data))
+  checkmate::assert_choice(x = a_op, choices = c("gte", "lte", "gt", "lt", "e"))
+  checkmate::assert_choice(x = b_op, choices = c("gte", "lte", "gt", "lt", "e"))
   checkmate::assert_count(x = a)
   checkmate::assert_count(x = b)
 
+  # Create a logical variable, operating y and b
   if(b_op == "gte"){
     .data$value_ref <- ifelse(get(y, .data) >= b, TRUE, FALSE)
   } else if(b_op == "lte"){
@@ -16,6 +20,7 @@ rle_filter <- function(.data, y, a_op, a, b_op, b, isolated){
     .data$value_ref <- ifelse(get(y, .data) == b, TRUE, FALSE)
   }
 
+  # For isolated true, consider if previous and ahead values are equal to zero
   if(isolated == TRUE){
     .data$lag <- dplyr::lag(get(y, .data), default = 0)
     .data$lead <- dplyr::lead(get(y, .data), default = 0)
@@ -23,14 +28,16 @@ rle_filter <- function(.data, y, a_op, a, b_op, b, isolated){
     .data$value_ref <- as.logical(.data$value_ref * .data$value_ref_2)
   }
 
+  # Run length encoding
   res1 <- rle(get("value_ref", .data))
 
+  # Tidy result
   res2 <- tibble::tibble(
     lengths = res1$lengths,
     values = res1$values
   )
 
-
+  # For isolated false, filter positive results, and operate length and a value
   if(isolated == FALSE){
     if(a_op == "gte"){
       res3 <- dplyr::filter(.data = res2, .data$values == TRUE & .data$lengths >= a)
@@ -44,25 +51,19 @@ rle_filter <- function(.data, y, a_op, a, b_op, b, isolated){
       res3 <- dplyr::filter(.data = res2, .data$values == TRUE & .data$lengths == a)
     }
   } else if(isolated == TRUE){
-
+    # For isolated true, consider only positive results with length of one
     if(a != 1L){
       stop("Argument `a` must be equal to 1.")
     }
 
-    if(a_op == "gte"){
-      res3 <- dplyr::filter(.data = res2, .data$values == TRUE & .data$lengths == a)
-    } else if(a_op == "lte"){
-      res3 <- dplyr::filter(.data = res2, .data$values == TRUE & .data$lengths == a)
-    } else if(a_op == "gt"){
-      res3 <- dplyr::filter(.data = res2, .data$values == TRUE & .data$lengths == a)
-    } else if(a_op == "lt"){
-      res3 <- dplyr::filter(.data = res2, .data$values == TRUE & .data$lengths == a)
-    } else if(a_op == "e"){
-      res3 <- dplyr::filter(.data = res2, .data$values == TRUE & .data$lengths == a)
+    if(a_op != "e"){
+      stop("Argument `a_op` must be equal to `e`.")
     }
+
+    res3 <- dplyr::filter(.data = res2, .data$values == TRUE & .data$lengths == a)
   }
 
-
+  # Returns the number of rows that meets the specified criteria
   nrow(res3)
 }
 
@@ -102,6 +103,7 @@ rle_filter <- function(.data, y, a_op, a, b_op, b, isolated){
 #' feat_length(.data = example_4, y = "value", a_op = "e", a = 1, b_op = "gte", b = 5, isolated = TRUE)
 #'
 feat_length <- function(.data, y, a_op = "gte", a, b_op = "gte", b, isolated = FALSE){
+  # Check assertions
   checkmate::assert_class(x = .data, classes = "tbl_ts")
   checkmate::assert_choice(x = y, choices = names(.data))
   checkmate::assert_choice(x = a_op, choices = c("gte", "lte", "gt", "lt", "e"))
@@ -109,6 +111,7 @@ feat_length <- function(.data, y, a_op = "gte", a, b_op = "gte", b, isolated = F
   checkmate::assert_count(x = a)
   checkmate::assert_count(x = b)
 
+  # Apply rle_filter for each keys on a tsibble object
   tsibble::as_tibble(.data) %>%
     dplyr::group_by(!!!tsibble::key(.data)) %>%
     dplyr::summarise(freq = rle_filter(.data = dplyr::pick(dplyr::everything()), y = y, a_op = a_op, a = a, b_op = b_op, b = b, isolated = isolated)) %>%
