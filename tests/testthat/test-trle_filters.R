@@ -17,5 +17,5 @@ test_that("trle_filter_max works", {
     value = c(8,15,20,0,0,0,0,5,0,0,0,NA,12)
   )
 
-  expect_equal(trle_filter_max(.data = example_7, y = "value", b = 0), 4)
+  expect_equal(trle_filter_max(.data = example_7, y = "value", b = 0, b_op = "e"), 4)
 })
