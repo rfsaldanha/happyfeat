@@ -2,4 +2,5 @@
 
 export("%>%")
 export(feat_length)
+export(trle)
 importFrom(magrittr,"%>%")

@@ -104,3 +104,33 @@ test_that("feat_length works with NA", {
   expect_equal(nrow(res), 1)
   expect_equal(res$freq, 1)
 })
+
+
+
+test_that("feat_length_max works", {
+  example_8 <- tsibble::tsibble(
+    cod = rep(1, 13),
+    time = 1:13,
+    value = c(8,15,20,0,0,0,0,5,0,0,0,NA,12),key = cod, index = time
+  )
+
+  res <- feat_length_max(.data = example_8, y = "value", b = 0)
+
+  expect_equal(nrow(res), 1)
+  expect_equal(res$freq, 4)
+})
+
+test_that("feat_length_max works with more keys", {
+  example_9 <- tsibble::tsibble(
+    cod = c(rep(1, 10),rep(2, 10)),
+    time = c(1:10,1:10),
+    value = c(c(8,15,20,0,0,0,0,0,9,12),c(8,15,20,0,0,0,0,5,9,12)),
+    key = cod, index = time
+  )
+
+  res <- feat_length_max(.data = example_9, y = "value", b = 0)
+
+  expect_equal(nrow(res), 2)
+  expect_equal(res$freq[[1]], 5)
+  expect_equal(res$freq[[2]], 4)
+})
