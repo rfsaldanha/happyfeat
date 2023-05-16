@@ -52,15 +52,16 @@ feat_length <- function(.data, y, a_op = "gte", a, b_op = "gte", b, isolated = F
 
 
 
-feat_length_max <- function(.data, y, b){
+feat_length_max <- function(.data, y, b, b_op = "e"){
   # Check assertions
   checkmate::assert_class(x = .data, classes = "tbl_ts")
   checkmate::assert_choice(x = y, choices = names(.data))
   checkmate::assert_count(x = b)
+  checkmate::assert_choice(x = b_op, choices = c("gte", "lte", "gt", "lt", "e"))
 
   # Apply trle_filter_max for each keys on a tsibble object
   tsibble::as_tibble(.data) %>%
     dplyr::group_by(!!!tsibble::key(.data)) %>%
-    dplyr::summarise(freq = trle_filter_max(.data = dplyr::pick(dplyr::everything()), y = y, b = b)) %>%
+    dplyr::summarise(freq = trle_filter_max(.data = dplyr::pick(dplyr::everything()), y = y, b = b, b_op = b_op)) %>%
     dplyr::ungroup()
 }

@@ -63,18 +63,36 @@ trle_filter <- function(.data, y, a_op, a, b_op, b, isolated){
 
 
 
-trle_filter_max <- function(.data, y, b){
+trle_filter_max <- function(.data, y, b, b_op){
   # Check assertions
   checkmate::assert_class(x = .data, classes = "tbl")
   checkmate::assert_choice(x = y, choices = names(.data))
   checkmate::assert_count(x = b)
+  checkmate::assert_choice(x = b_op, choices = c("gte", "lte", "gt", "lt", "e"))
 
-  # Compare y to b
-  .data$value_ref <- ifelse(get(y, .data) == b, TRUE, FALSE)
+  # Create a logical variable, operating y and b
+  if(b_op == "gte"){
+    .data$value_ref <- ifelse(get(y, .data) >= b, TRUE, FALSE)
+  } else if(b_op == "lte"){
+    .data$value_ref <- ifelse(get(y, .data) <= b, TRUE, FALSE)
+  } else if(b_op == "gt"){
+    .data$value_ref <- ifelse(get(y, .data) > b, TRUE, FALSE)
+  } else if(b_op == "lt"){
+    .data$value_ref <- ifelse(get(y, .data) < b, TRUE, FALSE)
+  } else if(b_op == "e"){
+    .data$value_ref <- ifelse(get(y, .data) == b, TRUE, FALSE)
+  }
 
   # Compute tibble run length encoding considering the reference value, filter positive values, pull lengths and determine maximun value
-  trle(.data, y = "value_ref") %>%
-    dplyr::filter(.data$values == TRUE) %>%
-    dplyr::pull("lengths") %>%
-    max()
+  res <- trle(.data, y = "value_ref") %>%
+    dplyr::filter(.data$values == TRUE)
+
+  if(nrow(res >= 1)){
+    res %>%
+      dplyr::pull("lengths") %>%
+      max(na.rm = TRUE)
+  } else {
+    NA
+  }
+
 }
