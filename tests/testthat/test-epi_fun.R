@@ -22,3 +22,9 @@ test_that("epi_dc6 works", {
 
   expect_equal(rlang::hash(res$Dc6), "c6b7ab068b61bd1e60ebd964947d98a8")
 })
+
+test_that("epi_dcmax works", {
+  res <- epi_dcmax(example_data, "count")
+
+  expect_equal(rlang::hash(res$Dc6), "c6b7ab068b61bd1e60ebd964947d98a8")
+})
