@@ -1,6 +1,6 @@
 example_data <- outbreaks::covid19_england_nhscalls_2020 %>%
   dplyr::group_by(date, postcode) %>%
-  dplyr::summarise(count = sum(count, na.rm = TRUE)) %>%
+  dplyr::summarise(count = sum(count, na.rm = TRUE), .groups = "drop") %>%
   dplyr::ungroup() %>%
   tsibble::as_tsibble(key = postcode, index = date)
 
