@@ -19,5 +19,6 @@ epi_dc6 <- function(.data, y){
 }
 
 epi_dcmax <- function(.data, y){
-  feat_length_max(.data, y, b = 5, b_op = "gte")
+  feat_length_max(.data, y, b = 5, b_op = "gte") %>%
+    dplyr::rename("Dcmax" = "freq")
 }
