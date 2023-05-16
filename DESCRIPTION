@@ -17,6 +17,8 @@ Imports:
     checkmate,
     dplyr,
     magrittr,
+    outbreaks,
+    rlang,
     tibble,
     tsibble
 Suggests: 
