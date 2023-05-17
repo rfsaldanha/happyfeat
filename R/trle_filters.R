@@ -101,11 +101,11 @@ trle_filter_stat <- function(.data, y, b, b_op, stat){
     } else if(stat == "mean"){
       res3 <- res2 %>% mean(na.rm = TRUE)
     } else if(stat == "median"){
-      res3 <- res2 %>% median(na.rm = TRUE)
+      res3 <- res2 %>% stats::median(na.rm = TRUE)
     } else if(stat == "sd"){
-      res3 <- res2 %>% sd(na.rm = TRUE)
+      res3 <- res2 %>% stats::sd(na.rm = TRUE)
     } else if(stat == "var"){
-      res3 <- res2 %>% var(na.rm = TRUE)
+      res3 <- res2 %>% stats::var(na.rm = TRUE)
     }
 
   } else {

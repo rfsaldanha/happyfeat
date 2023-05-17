@@ -17,6 +17,7 @@ Imports:
     checkmate,
     dplyr,
     magrittr,
+    stats,
     tibble,
     tsibble
 Suggests: 
