@@ -63,12 +63,13 @@ trle_filter <- function(.data, y, a_op, a, b_op, b, isolated){
 
 
 
-trle_filter_max <- function(.data, y, b, b_op){
+trle_filter_stat <- function(.data, y, b, b_op, stat){
   # Check assertions
   checkmate::assert_class(x = .data, classes = "tbl")
   checkmate::assert_choice(x = y, choices = names(.data))
   checkmate::assert_count(x = b)
   checkmate::assert_choice(x = b_op, choices = c("gte", "lte", "gt", "lt", "e"))
+  checkmate::assert_choice(x = stat, choices = c("max", "min", "mean", "median", "sd", "var"))
 
   # Create a logical variable, operating y and b
   if(b_op == "gte"){
@@ -87,12 +88,32 @@ trle_filter_max <- function(.data, y, b, b_op){
   res <- trle(.data, y = "value_ref") %>%
     dplyr::filter(.data$values == TRUE)
 
+  # Pull lengths vector
   if(nrow(res >= 1)){
-    res %>%
-      dplyr::pull("lengths") %>%
-      max(na.rm = TRUE)
+    res2 <- res %>%
+      dplyr::pull("lengths")
+
+    # Calculate statistics
+    if(stat == "max"){
+      res3 <- res2 %>% max(na.rm = TRUE)
+    } else if(stat == "min"){
+      res3 <- res2 %>% min(na.rm = TRUE)
+    } else if(stat == "mean"){
+      res3 <- res2 %>% mean(na.rm = TRUE)
+    } else if(stat == "median"){
+      res3 <- res2 %>% median(na.rm = TRUE)
+    } else if(stat == "sd"){
+      res3 <- res2 %>% sd(na.rm = TRUE)
+    } else if(stat == "var"){
+      res3 <- res2 %>% var(na.rm = TRUE)
+    }
+
   } else {
-    NA
+    res3 <- NA
   }
 
+  # Return result
+  return(res3)
 }
+
+

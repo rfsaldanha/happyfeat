@@ -114,7 +114,7 @@ test_that("feat_length_max works", {
     value = c(8,15,20,0,0,0,0,5,0,0,0,NA,12),key = cod, index = time
   )
 
-  res <- feat_length_max(.data = example_8, y = "value", b = 0)
+  res <- feat_length_stat(.data = example_8, y = "value", b = 0, stat = "max")
 
   expect_equal(nrow(res), 1)
   expect_equal(res$freq, 4)
@@ -128,7 +128,7 @@ test_that("feat_length_max works with more keys", {
     key = cod, index = time
   )
 
-  res <- feat_length_max(.data = example_9, y = "value", b = 0)
+  res <- feat_length_stat(.data = example_9, y = "value", b = 0, stat = "max")
 
   expect_equal(nrow(res), 2)
   expect_equal(res$freq[[1]], 5)
