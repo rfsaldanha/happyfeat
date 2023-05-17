@@ -32,5 +32,5 @@ t_filter <- function(.data, y, b, b_op){
     .data$value_ref <- ifelse(get(y, .data) == b, TRUE, FALSE)
   }
 
-  return(sum(.data$value_ref)/nrow(.data))
+  return(sum(.data$value_ref, na.rm = TRUE)/nrow(.data))
 }
