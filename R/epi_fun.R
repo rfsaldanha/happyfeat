@@ -54,6 +54,6 @@ epi_prop <- function(.data, y){
 }
 
 epi_st <- function(.data, y){
-  feat_st(.data, y) %>%
+  feat_st(.data, y, type = "mult") %>%
     dplyr::rename("ST" = "st")
 }
