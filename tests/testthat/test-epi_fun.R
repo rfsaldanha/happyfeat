@@ -141,6 +141,13 @@ test_that("epi_prop works", {
   expect_equal(res$Prop, 0.7)
 })
 
+test_that("epi_st works", {
+  res <- epi_st(tsibble::as_tsibble(USAccDeaths), "value")
+
+  expect_equal(res$ST, 8682.6993)
+})
+
+
 
 
 # Tests with big dataset
@@ -210,4 +217,10 @@ test_that("epi_prop works with big dataset", {
   res <- epi_prop(example_data_big, "count")
 
   expect_equal(rlang::hash(res$Prop), "335bac5b5ead5736781cafd04d73e50b")
+})
+
+test_that("epi_st works with big dataset", {
+  res <- epi_st(example_data_big, "count")
+
+  expect_equal(rlang::hash(res$ST), "099d4a73630ce3f1d4c1efd60b545c3a")
 })

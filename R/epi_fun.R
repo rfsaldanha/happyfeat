@@ -52,3 +52,8 @@ epi_prop <- function(.data, y){
   feat_prop(.data, y, b = 5, b_op = "gte") %>%
     dplyr::rename("Prop" = "prop")
 }
+
+epi_st <- function(.data, y){
+  feat_st(.data, y) %>%
+    dplyr::rename("ST" = "st")
+}

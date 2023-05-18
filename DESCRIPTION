@@ -16,13 +16,15 @@ RoxygenNote: 7.2.3
 Imports: 
     checkmate,
     dplyr,
+    fabletools,
+    feasts,
     magrittr,
+    rlang,
     stats,
     tibble,
     tsibble
 Suggests: 
     testthat (>= 3.0.0),
-    rlang,
     outbreaks
-Config/testthat/parallel: false
+Config/testthat/parallel: true
 Config/testthat/edition: 3
