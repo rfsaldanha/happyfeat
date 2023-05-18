@@ -21,7 +21,7 @@ st_ratio <- function(.data, y, index_var){
 
   if(tsibble::has_gaps(res)$.gaps){
     return(NA)
-  } else if(var(get(y, res)) == 0){
+  } else if(stats::var(get(y, res)) == 0){
     return(NA)
   } else {
     dec_components <- fabletools::model(res, feasts::classical_decomposition(!!rlang::sym(y), type = "mult")) %>%
