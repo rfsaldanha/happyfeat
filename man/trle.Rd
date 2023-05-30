@@ -15,7 +15,7 @@ trle(.data, y)
 a \code{tibble} object.
 }
 \description{
-Run Length Encoding and return result as a tibble
+Given a tibble object and a variable \code{y}, this function will count the number of occurrence of each element in \code{y} in the sequence that they appear, and return this count as a tibble object.
 }
 \examples{
 example_1 <- tibble::tibble(
@@ -25,4 +25,7 @@ value = c(8,15,20,0,0,0,0,5,9,12)
 )
 
 trle(.data = example_1, y = "value")
+}
+\seealso{
+\code{\link[=rle]{rle()}}
 }

@@ -1,3 +1,14 @@
+#' Compute the ratio between average trend and average seasonality
+#'
+#' This function will compute -- for each key on a tsibble object -- the ratio between average trend and average seasonality, obtained from a multiplicative or additive decomposition of the time series.
+#'
+#' @param .data .data a \code{tsibble} object.
+#' @param y character. Reference variable with numeric values.
+#' @param type character. \code{mult} for multiplicative time series decomposition or \code{add} to additive time series composition.
+#'
+#' @return a \code{tibble} object.
+#' @export
+#'
 feat_st <- function(.data, y, type){
   # Check assertions
   checkmate::assert_class(x = .data, classes = "tbl_ts")

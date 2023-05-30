@@ -1,3 +1,32 @@
+#' Compute the proportion of values that meets criteria
+#'
+#' This function computes -- for each key on a tsibble object -- the proportion (from 0 to 1) of values that meets criteria.
+#'
+#' Example: What is the proportion of values greater or equal to 5 (\code{b = 5, b_op = "gte"})?
+#'
+#' @param .data .data a \code{tsibble} object.
+#' @param y character. Reference variable with numeric values.
+#' @param b integer. Value threshold applied to \code{y}.
+#' @param b_op character. Operator, \code{gte} = greater than or equal, \code{lte} = less than or equal, \code{gt} = greater than, \code{lt} = less than, \code{e} = equal.
+#'
+#' @return a \code{tibble} object.
+#' @export
+#'
+#' @examples
+#'
+#' # What is the proportion of values greater or equal to 5?
+#'
+#' example_data <- tsibble::tsibble(
+#' cod = rep(1, 10),
+#' time = 1:10,
+#' value = c(8,15,20,0,0,0,0,5,9,12),
+#' key = cod,
+#' index = time
+#' )
+#'
+#' feat_prop(.data = example_data, y = "value", b = 5, b_op = "gte")
+#'
+#'
 feat_prop <- function(.data, y, b, b_op){
   # Check assertions
   checkmate::assert_class(x = .data, classes = "tbl_ts")

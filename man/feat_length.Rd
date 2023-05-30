@@ -2,7 +2,7 @@
 % Please edit documentation in R/feat_length.R
 \name{feat_length}
 \alias{feat_length}
-\title{Compute length of periods}
+\title{Count the length of periods that meets criteria}
 \usage{
 feat_length(.data, y, a_op = "gte", a, b_op = "gte", b, isolated = FALSE)
 }
@@ -20,15 +20,18 @@ feat_length(.data, y, a_op = "gte", a, b_op = "gte", b, isolated = FALSE)
 \item{isolated}{logical. Consider only isolated events, ie. surrounded by zeros. On this case, \code{a} and \code{a_op} are not considered.}
 }
 \value{
-A tibble.
+a \code{tibble} object.
 }
 \description{
-Compute length of periods
+This function will count the length of periods that meets criteria for each key on a tsibble object.
+}
+\details{
+Example: How many periods have at least 3 consecutive observations (\code{a_op = "gte", a = 3}) with values equal or greater than 5 (\code{b_op = "gte", b = 5})?
 }
 \examples{
-# How many at least 3 consecutive periods with value equal or greater to 5
+# How many periods have at least 3 consecutive observations with value equal or greater than 5
 
-example_1 <- tsibble::tsibble(
+example_data <- tsibble::tsibble(
 cod = rep(1, 10),
 time = 1:10,
 value = c(8,15,20,0,0,0,0,5,9,12),
@@ -36,16 +39,17 @@ key = cod,
 index = time
 )
 
-feat_length(.data = example_1, y = "value", a_op = "gte", a = 3, b_op = "gte", b = 5)
+feat_length(.data = example_data, y = "value", a_op = "gte", a = 3, b_op = "gte", b = 5)
 
-# How many isolate periods with value equal or greater to 5
+# How many periods have isolate observations with values equal or greater to 5
 
-example_4 <- tsibble::tsibble(
+example_data <- tsibble::tsibble(
 cod = rep(1, 11),
 time = 1:11,
-value = c(0,16,0,0,8,3,0,10,0,2,0),key = cod, index = time
+value = c(0,16,0,0,8,3,0,10,0,2,0), key = cod, index = time
 )
 
-feat_length(.data = example_4, y = "value", a_op = "e", a = 1, b_op = "gte", b = 5, isolated = TRUE)
+feat_length(.data = example_data, y = "value",
+a_op = "e", a = 1, b_op = "gte", b = 5, isolated = TRUE)
 
 }
