@@ -2,7 +2,7 @@
 % Please edit documentation in R/trle.R
 \name{trle}
 \alias{trle}
-\title{Run Length Encoding with tibble result}
+\title{Run Length Encoding and return result as a tibble}
 \usage{
 trle(.data, y)
 }
@@ -15,7 +15,7 @@ trle(.data, y)
 a \code{tibble} object.
 }
 \description{
-Run Length Encoding with tibble result
+Run Length Encoding and return result as a tibble
 }
 \examples{
 example_1 <- tibble::tibble(
