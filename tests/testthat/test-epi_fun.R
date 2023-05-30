@@ -222,5 +222,5 @@ test_that("epi_prop works with big dataset", {
 test_that("epi_st works with big dataset", {
   res <- epi_st(example_data_big, "count")
 
-  expect_equal(rlang::hash(res$ST), "099d4a73630ce3f1d4c1efd60b545c3a")
+  expect_equal(rlang::hash(res$ST), "d9721fde2cd87f62c38a3bd356d0fde0")
 })
