@@ -1,4 +1,4 @@
-#' Run Length Encoding with tibble result
+#' Run Length Encoding and return result as a tibble
 #'
 #' @param .data a \code{tibble} object.
 #' @param y character. A variable available on \code{.data}
