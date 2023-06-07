@@ -18,6 +18,7 @@ Imports:
     dplyr,
     fabletools,
     feasts,
+    lubridate,
     magrittr,
     rlang,
     stats,
