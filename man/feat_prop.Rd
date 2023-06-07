@@ -7,7 +7,7 @@
 feat_prop(.data, y, b, b_op)
 }
 \arguments{
-\item{.data}{.data a \code{tsibble} object.}
+\item{.data}{a \code{tsibble} object.}
 
 \item{y}{character. Reference variable with numeric values.}
 

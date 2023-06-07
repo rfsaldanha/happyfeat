@@ -4,7 +4,7 @@
 #'
 #' Example: What is the proportion of values greater or equal to 5 (\code{b = 5, b_op = "gte"})?
 #'
-#' @param .data .data a \code{tsibble} object.
+#' @param .data a \code{tsibble} object.
 #' @param y character. Reference variable with numeric values.
 #' @param b integer. Value threshold applied to \code{y}.
 #' @param b_op character. Operator, \code{gte} = greater than or equal, \code{lte} = less than or equal, \code{gt} = greater than, \code{lt} = less than, \code{e} = equal.
